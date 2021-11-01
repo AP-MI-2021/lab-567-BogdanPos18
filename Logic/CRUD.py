@@ -9,9 +9,13 @@ def adauga_rezervare(id, nume, clasa, pret, checkin, lista):
     :param clasa: economy, economy plus sau business
     :param pret: pretul rezervarii
     :param checkin: da/nu
-    :return: dictionar de tipul rezervare
+    :return: tupla de tipul rezervare
     '''
+    if get_by_id(id, lista) is not None:
+        raise ValueError("Id-ul introdus exista deja!")
     rezervare = creeaza_rezervare(id, nume, clasa, pret, checkin)
+    if pret < 0:
+        raise ValueError("Pretul nu poate fi numar negativ!")
     return lista + [rezervare]
 
 
@@ -22,6 +26,8 @@ def sterge_rezervare(id, lista):
     :param lista:
     :return:
     '''
+    if get_by_id(id, lista) is None:
+        raise ValueError("Nu exista rezervare cu id-ul dat!")
     return [rezervare for rezervare in lista if get_id(rezervare) != id]
 
 
@@ -36,6 +42,8 @@ def modifica_rezervare(id, nume, clasa, pret, checkin, lista):
     :param lista:
     :return:
     '''
+    if get_by_id(id, lista) is None:
+        raise ValueError("Nu exista rezervare cu id-ul dat!")
     lista_noua = []
     for rezervare in lista:
         if get_id(rezervare) == id:
@@ -43,6 +51,8 @@ def modifica_rezervare(id, nume, clasa, pret, checkin, lista):
             lista_noua.append(rezervare_noua)
         else:
             lista_noua.append(rezervare)
+    if pret < 0:
+        raise ValueError("Pretul nu poate fi negativ!")
     return lista_noua
 
 

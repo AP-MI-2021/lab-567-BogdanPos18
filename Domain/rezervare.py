@@ -4,12 +4,11 @@ def creeaza_rezervare(id, nume, clasa, pret, checkin):
     :param id: string
     :param nume: string
     :param clasa: string
-    :param pret: float
+    :param pret: string
     :param checkin: string
     :return: o tupla ce contine o rezervare
     '''
     return [id, nume, clasa, pret, checkin]
-
 
 
 def get_id(rezervare):
