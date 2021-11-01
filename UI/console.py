@@ -74,12 +74,16 @@ def ui_mutare_la_clasa_superioara(lista):
 
 
 def ui_ieftinire_rezervari(lista):
-    procentaj = input("Dati procentul cu care doriti sa se faca reducerea, in formatul 'x%': ")
-    i = 0
-    string = [procentaj[i:i+len(procentaj)-1] for i in range(0, len(procentaj), len(procentaj)-1)]
-    percent = int(string[0])
-    lista = ieftinire_rezervari(percent, lista)
-    return lista
+    try:
+        procentaj = input("Dati procentul cu care doriti sa se faca reducerea, in formatul 'x%': ")
+        i = 0
+        string = [procentaj[i:i+len(procentaj)-1] for i in range(0, len(procentaj), len(procentaj)-1)]
+        percent = float(string[0])
+        lista = ieftinire_rezervari(percent, lista)
+        return lista
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
+        return lista
 
 
 def show_all(lista):

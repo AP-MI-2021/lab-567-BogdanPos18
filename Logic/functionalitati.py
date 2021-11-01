@@ -13,12 +13,15 @@ def mutare_la_clasa_superioara(nume, lista):
     return lista_noua
 
 
-def ieftinire_rezervari(procentaj, lista):
+def ieftinire_rezervari(percent, lista):
+    percent_str = str(percent)
+    if percent_str.isdigit() is False and percent < 0:
+        raise ValueError("Nu ati introdus o valoare valida!")
     lista_noua = []
     for rezervare in lista:
         if get_checkin(rezervare) == "da":
             price = get_pret(rezervare)
-            price -= procentaj / 100 * price
+            price -= percent / 100 * price
             rezervare[3] = price
         lista_noua.append(rezervare)
     return lista_noua
