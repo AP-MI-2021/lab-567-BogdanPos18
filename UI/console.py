@@ -18,7 +18,7 @@ def print_menu():
     print("x. Iesire")
 
 
-def ui_adauga_rezervare(lista, undo_list):
+def ui_adauga_rezervare(lista, undo_list, redo_list):
     try:
         id = input("Dati id-ul: ")
         nume = input("Dati numele: ")
@@ -32,25 +32,27 @@ def ui_adauga_rezervare(lista, undo_list):
             print("Eroare: Trebuie sa introduceti 'da'/'nu' ")
             return lista
         rezultat = adauga_rezervare(id, nume, clasa, pret, checkin, lista)
-        undo_list.append(lista[:])
+        undo_list.append(lista)
+        redo_list.clear()
         return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def ui_sterge_rezervare(lista, undo_list):
+def ui_sterge_rezervare(lista, undo_list, redo_list):
     try:
         id = input("Dati id-ul rezervarii de sters: ")
         rezultat = sterge_rezervare(id, lista)
         undo_list.append(lista)
+        redo_list.clear(lista)
         return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def ui_modifica_rezervare(lista, undo_list):
+def ui_modifica_rezervare(lista, undo_list, redo_list):
     try:
         id = input("Dati id-ul: ")
         nume = input("Dati numele: ")
@@ -65,20 +67,22 @@ def ui_modifica_rezervare(lista, undo_list):
             return lista
         rezultat = modifica_rezervare(id, nume, clasa, pret, checkin, lista)
         undo_list.append(lista)
+        redo_list.clear()
         return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def ui_mutare_la_clasa_superioara(lista, undo_list):
+def ui_mutare_la_clasa_superioara(lista, undo_list, redo_list):
     nume = input("Dati numele persoanei: ")
     undo_list.append(lista)
+    redo_list.clear()
     rezultat = mutare_la_clasa_superioara(nume, lista)
     return rezultat
 
 
-def ui_ieftinire_rezervari(lista, undo_list):
+def ui_ieftinire_rezervari(lista, undo_list, redo_list):
     try:
         procentaj = input("Dati procentul cu care doriti sa se faca reducerea, in formatul 'x%': ")
         if procentaj.count('%') != 1:
@@ -89,6 +93,7 @@ def ui_ieftinire_rezervari(lista, undo_list):
         percent = float(string[0])
         rezultat = ieftinire_rezervari(percent, lista)
         undo_list.append(lista)
+        redo_list.clear()
         return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
@@ -100,9 +105,10 @@ def ui_det_pret_max_per_clasa(lista):
     print("Preturile maxime pentru clasele economy/economy plus/business sunt: ", preturi)
 
 
-def ui_descrescator_dupa_pret(lista, undo_list):
+def ui_descrescator_dupa_pret(lista, undo_list, redo_list):
     rezultat = descrescator_dupa_pret(lista)
     undo_list.append(lista)
+    redo_list.clear()
     return rezultat
 
 
@@ -122,30 +128,39 @@ def show_all(lista):
 
 def run_menu(lista):
     undo_list = []
+    redo_list = []
     while True:
+        print(redo_list)
         print_menu()
         optiune = input("Alegeti operatia: ")
         if optiune == '1':
-            lista = ui_adauga_rezervare(lista, undo_list)
+            lista = ui_adauga_rezervare(lista, undo_list, redo_list)
         elif optiune == '2':
-            lista = ui_sterge_rezervare(lista, undo_list)
+            lista = ui_sterge_rezervare(lista, undo_list, redo_list)
         elif optiune == '3':
-            lista = ui_modifica_rezervare(lista, undo_list)
+            lista = ui_modifica_rezervare(lista, undo_list, redo_list)
         elif optiune == '4':
-            lista = ui_mutare_la_clasa_superioara(lista, undo_list)
+            lista = ui_mutare_la_clasa_superioara(lista, undo_list, redo_list)
         elif optiune == '5':
-            lista = ui_ieftinire_rezervari(lista, undo_list)
+            lista = ui_ieftinire_rezervari(lista, undo_list, redo_list)
         elif optiune == '6':
             ui_det_pret_max_per_clasa(lista)
         elif optiune == '7':
-            lista = ui_descrescator_dupa_pret(lista, undo_list)
+            lista = ui_descrescator_dupa_pret(lista, undo_list, redo_list)
         elif optiune == '8':
             ui_afisare_sume_preturi_per_nume(lista)
         elif optiune == 'u':
             if len(undo_list) > 0:
+                redo_list.append(lista)
                 lista = undo_list.pop()
             else:
                 print("Nu se mai poate face undo!")
+        elif optiune == 'r':
+            if len(redo_list) > 0:
+                undo_list.append(lista)
+                lista = redo_list.pop()
+            else:
+                print("Nu se mai poate face redo!")
         elif optiune == 'a':
             show_all(lista)
         elif optiune == 'x':

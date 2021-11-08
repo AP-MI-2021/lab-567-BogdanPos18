@@ -6,7 +6,7 @@ from UI.console import run_menu
 def main():
     lista = []
     run_all_tests()
-    print("Pentru primul meniu, apasati 1, pentru cel de al doilea, apasati 2")
+    print("Pentru meniul in linie de comanda, apasati 1, pentru cel standard, apasati 2")
     p = input("Alegeti meniul: ")
     if p == '1':
         command_line(lista)
