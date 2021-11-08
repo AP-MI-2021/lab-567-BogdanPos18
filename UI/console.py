@@ -130,7 +130,6 @@ def run_menu(lista):
     undo_list = []
     redo_list = []
     while True:
-        print(redo_list)
         print_menu()
         optiune = input("Alegeti operatia: ")
         if optiune == '1':
