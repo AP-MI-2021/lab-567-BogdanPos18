@@ -68,3 +68,8 @@ def sume_preturi_per_nume(lista):
                 s += get_pret(rezervare)
         sume.append([x, s])
     return sume
+
+
+def get_undo_list(list, undo_list):
+    undo_list.append(list)
+    return undo_list
