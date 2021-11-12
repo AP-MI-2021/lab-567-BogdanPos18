@@ -14,6 +14,7 @@ def print_menu():
     print("7. Ordonarea rezervarilor descrescator dupa pret")
     print("8. Afisarea sumelor preturilor pentru fiecare nume")
     print("u. Undo")
+    print("r. Redo")
     print("a. Afiseaza tot")
     print("x. Iesire")
 
@@ -25,12 +26,6 @@ def ui_adauga_rezervare(lista):
         clasa = input("Dati clasa (economy/economy plus/business): ")
         pret = float(input("Dati pretul: "))
         checkin = input("Dati checkin: 'da/nu': ")
-        if clasa != "economy" and clasa != "economy plus" and clasa != "business":
-            print("Eroare: Nu ati introdus o clasa valida!")
-            return lista
-        if checkin != 'da' and checkin != 'nu':
-            print("Eroare: Trebuie sa introduceti 'da'/'nu' ")
-            return lista
         rezultat = adauga_rezervare(id, nume, clasa, pret, checkin, lista)
         return rezultat
     except ValueError as ve:
@@ -55,12 +50,6 @@ def ui_modifica_rezervare(lista):
         clasa = input("Dati clasa (economy/economy plus/business): ")
         pret = float(input("Dati pretul: "))
         checkin = input("Dati checkin: 'da/nu': ")
-        if clasa != "economy" and clasa != "economy plus" and clasa != "business":
-            print("Eroare: Nu ati introdus o clasa valida!")
-            return lista
-        if checkin != 'da' and checkin != 'nu':
-            print("Eroare: Trebuie sa introduceti 'da'/'nu' ")
-            return lista
         rezultat = modifica_rezervare(id, nume, clasa, pret, checkin, lista)
         return rezultat
     except ValueError as ve:

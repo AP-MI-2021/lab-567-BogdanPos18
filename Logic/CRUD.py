@@ -16,6 +16,13 @@ def adauga_rezervare(id, nume, clasa, pret, checkin, lista):
     rezervare = creeaza_rezervare(id, nume, clasa, pret, checkin)
     if pret < 0:
         raise ValueError("Pretul nu poate fi numar negativ!")
+    errors = []
+    if clasa not in ["economy", "economy plus", "business"]:
+        errors.append("Clasa trebuie sa fie 'economy'/'economy plus'/'business'")
+    if checkin not in ["da", "nu"]:
+        errors.append("Trebuie sa introduceti 'da'/'nu'")
+    if len(errors) > 0:
+        raise ValueError(errors)
     return lista + [rezervare]
 
 
@@ -53,6 +60,13 @@ def modifica_rezervare(id, nume, clasa, pret, checkin, lista):
             lista_noua.append(rezervare)
     if pret < 0:
         raise ValueError("Pretul nu poate fi negativ!")
+    errors = []
+    if clasa not in ["economy", "economy plus", "business"]:
+        errors.append("Clasa trebuie sa fie 'economy'/'economy plus'/'business'")
+    if checkin not in ["da", "nu"]:
+        errors.append("Trebuie sa introduceti 'da'/'nu'")
+    if len(errors) > 0:
+        raise ValueError(errors)
     return lista_noua
 
 

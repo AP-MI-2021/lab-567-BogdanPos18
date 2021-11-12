@@ -5,9 +5,6 @@ from UI.console import show_all
 def ui_cl_adauga_rezervare(id, nume, clasa, pret, checkin, lista):
     try:
         pret1 = float(pret)
-        if clasa != "economy" and clasa != "economy plus" and clasa != "business":
-            print("Eroare: Nu ati introdus o clasa valida!")
-            return lista
         lista = adauga_rezervare(id, nume, clasa, pret1, checkin, lista)
         return lista
     except ValueError as ve:
